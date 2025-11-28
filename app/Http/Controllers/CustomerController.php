@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::all();
-        return view('customers.index', compact('customers'));
+        // Use simple count instead of withCount for now
+        $customers = Customer::paginate(10);
+        $totalRevenue = Order::where('status', 'completed')->sum('total_amount');
+        $totalOrders = Order::count();
+
+        return view('customers.index', compact('customers', 'totalRevenue', 'totalOrders'));
     }
 
     public function create()
@@ -27,7 +32,7 @@ class CustomerController extends Controller
             'email' => 'required|email|unique:customers',
             'phone' => 'required|string|max:20',
             'date_of_birth' => 'nullable|date',
-            'address' => 'required|string'
+            'address' => 'required|string',
         ]);
 
         Customer::create($request->all());
@@ -38,6 +43,8 @@ class CustomerController extends Controller
 
     public function show(Customer $customer)
     {
+        // Load orders with their items and products
+        $customer->load(['orders.orderItems.product']);
         return view('customers.show', compact('customer'));
     }
 
@@ -55,7 +62,7 @@ class CustomerController extends Controller
             'email' => 'required|email|unique:customers,email,' . $customer->id,
             'phone' => 'required|string|max:20',
             'date_of_birth' => 'nullable|date',
-            'address' => 'required|string'
+            'address' => 'required|string',
         ]);
 
         $customer->update($request->all());

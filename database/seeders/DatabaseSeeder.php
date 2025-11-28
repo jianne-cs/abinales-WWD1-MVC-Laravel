@@ -9,7 +9,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            CustomerSeeder::class,
+            AdminUserSeeder::class,
+            ProductsSeeder::class,
+            PhilippineCustomersSeeder::class,
+            PhilippineOrdersSeeder::class,
         ]);
     }
 }

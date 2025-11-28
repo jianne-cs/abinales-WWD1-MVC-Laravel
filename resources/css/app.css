@@ -1,11 +1,79 @@
-@import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* Miku Color Scheme */
+:root {
+    --miku-teal: #39c5bb;
+    --miku-dark-teal: #00a9a3;
+    --miku-light-teal: #7fdbda;
+    --miku-gray: #2c2c2c;
+    --miku-blue: #4a90e2;
 }
+
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, var(--miku-teal) 0%, var(--miku-blue) 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.navbar {
+    background-color: var(--miku-teal) !important;
+    border-bottom: 3px solid var(--miku-dark-teal);
+}
+
+.btn-primary {
+    background-color: var(--miku-teal);
+    border-color: var(--miku-dark-teal);
+}
+
+.btn-primary:hover {
+    background-color: var(--miku-dark-teal);
+    border-color: var(--miku-teal);
+}
+
+.card {
+    border: 2px solid var(--miku-teal);
+    box-shadow: 0 4px 8px rgba(57, 197, 187, 0.3);
+}
+
+/* Miku-themed header */
+.miku-header {
+    background: linear-gradient(45deg, var(--miku-teal), var(--miku-light-teal));
+    color: teal;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+/* Custom Miku elements */
+.miku-avatar {
+    width: 100px;
+    height: 100px;
+    background: var(--miku-teal);
+    border-radius: 50%;
+    margin: 0 auto;
+    border: 3px solid white;
+}
+/* Miku buttons */
+.btn-miku {
+    background: linear-gradient(45deg, var(--miku-teal), var(--miku-blue));
+    color: teal;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-miku:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(57, 197, 187, 0.4);
+}
+
+/* Miku cards */
+.miku-card {
+    background: teal;
+    border-radius: 15px;
+    border: 2px solid var(--miku-teal);
+    transition: all 0.3s ease;
+}
+
+.miku-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(57, 197, 187, 0.3);
+}
+

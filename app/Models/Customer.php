@@ -4,27 +4,44 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'first_name',
-        'last_name',
+        'last_name', 
         'username',
         'email',
         'phone',
         'date_of_birth',
-        'address'
+        'address',
+        'purchased_items'
     ];
 
-    protected $casts = [
-        'date_of_birth' => 'date',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime',
-    ];
+    /**
+     * Get the orders for the customer.
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the total spent attribute.
+     */
+    public function getTotalSpentAttribute()
+    {
+        return $this->orders()->where('status', 'completed')->sum('total_amount');
+    }
+
+    /**
+     * Get the orders count attribute.
+     */
+    public function getOrdersCountAttribute()
+    {
+        return $this->orders()->count();
+    }
 }
